@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <!-- Firebase SDK-k -->
-<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trimágus Sorsolás</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #111; color: #eee; padding: 20px; }
+    #draw-container { display: none; }
+    #exportOutput { width: 90%; height: 100px; margin-top: 1em; display: none; }
+    #exportButton { display: none; margin-top: 10px; }
+    #drawButton { display: none; margin-top: 10px; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 5px 0; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>Trimágus Tusa Sorsolás</h1>
+  <div id="countdown">Várakozás...</div>
 
-<script>
-const firebaseConfig = {
+  <div id="draw-container">
+    <div id="login">
+      <input type="password" id="adminPass" placeholder="Admin jelszó">
+      <button id="loginButton">Belépés</button>
+    </div>
+    <button id="drawButton">Sorsolás indítása</button>
+    <ul id="resultList"></ul>
+    <button id="exportButton">Exportálás</button>
+    <textarea id="exportOutput" readonly></textarea>
+  </div>
+
+  <script>
+ const firebaseConfig = {
   apiKey: "AIzaSyAb3h37qh_4rm9J9lbxRMwNMApWo_ExxXI",
   authDomain: "tuzserlege-3e50f.firebaseapp.com",
   databaseURL: "https://tuzserlege-3e50f-default-rtdb.europe-west1.firebasedatabase.app",
@@ -16,42 +42,92 @@ const firebaseConfig = {
   appId: "1:607271028125:web:55dbe236ea97c6fbeadb74"
 };
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Trimágus Tusa Sorsolás</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>Trimágus Tusa - Serleg Sorsolás</h1>
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    <div id="countdown-container">
-      <p id="countdown"></p>
-    </div>
+    const drawButton = document.getElementById("drawButton");
+    const resultList = document.getElementById("resultList");
+    const exportButton = document.getElementById("exportButton");
+    const exportOutput = document.getElementById("exportOutput");
+    const loginButton = document.getElementById("loginButton");
+    const adminPass = document.getElementById("adminPass");
+    const countdownEl = document.getElementById("countdown");
+    const drawContainer = document.getElementById("draw-container");
 
-<div id="draw-container" style="display: none;">
-  <div id="login-section">
-    <input type="password" id="adminPass" placeholder="Staff jelszó" />
-    <button id="loginButton">🔓 Bejelentkezés</button>
-  </div>
-  <button id="drawButton" style="display: none;">🎉 Sorsolás indítása</button>
-  <ul id="resultList"></ul>
-  <button id="exportButton" style="display: none;">💾 Exportálás JSON-ként</button>
-  <textarea id="exportOutput" readonly style="display:none;"></textarea>
-</div>
+    const ADMIN_PASSWORD = "trimagus2025"; // Jelszó
+    const drawDate = new Date("2025-10-31T18:00:00"); // Halloween 18:00
 
-  <script src="script.js"></script>
+    function updateCountdown() {
+      const now = new Date();
+      const diff = drawDate - now;
+      if (diff <= 0) {
+        countdownEl.style.display = "none";
+        drawContainer.style.display = "block";
+        checkDrawn();
+        return;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownEl.textContent = `Sorsolás kezdete: ${hours} óra ${mins} perc ${secs} másodperc`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-    <div id="login">
-  <input type="password" id="adminPass" placeholder="Staff jelszó">
-  <button id="loginButton">Belépés</button>
-</div>
+    function checkDrawn() {
+      db.ref("drawn").once("value").then(snapshot => {
+        const data = snapshot.val();
+        if (data) {
+          showResults(data);
+        } else {
+          drawButton.style.display = "inline-block";
+        }
+      });
+    }
 
-<button id="drawButton" style="display: none;">Sorsolás indítása</button>
+    drawButton.addEventListener("click", () => {
+      fetch("tickets.json")
+        .then(res => res.json())
+        .then(tickets => {
+          const shuffled = tickets.sort(() => 0.5 - Math.random());
+          const unique = [...new Set(shuffled)];
+          const drawn = unique.slice(0, 6);
+          showResults(drawn);
+          showExport(drawn);
+          db.ref("drawn").set(drawn);
+        });
+    });
 
-<ul id="resultList"></ul>
+    function showResults(drawn) {
+      resultList.innerHTML = "";
+      drawn.forEach(name => {
+        const li = document.createElement("li");
+        li.textContent = name;
+        resultList.appendChild(li);
+      });
+    }
+
+    function showExport(drawn) {
+      exportButton.style.display = "inline-block";
+      exportOutput.style.display = "block";
+      exportOutput.value = JSON.stringify(drawn, null, 2);
+    }
+
+    loginButton.addEventListener("click", () => {
+      if (adminPass.value === ADMIN_PASSWORD) {
+        drawButton.style.display = "inline-block";
+        loginButton.style.display = "none";
+        adminPass.style.display = "none";
+      } else {
+        alert("Hibás jelszó.");
+      }
+    });
+
+    // Realtime frissítés minden látogatónak
+    db.ref("drawn").on("value", snapshot => {
+      const data = snapshot.val();
+      if (data) showResults(data);
+    });
+  </script>
 </body>
 </html>

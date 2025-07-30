@@ -64,6 +64,15 @@ loginButton.addEventListener("click", () => {
   });
 });
 
+sha1(adminPass.value.trim()).then(hash => {
+  console.log("Hash:", hash);
+  if (hash === ADMIN_HASH) {
+    // ...
+  } else {
+    alert("Hibás jelszó.");
+  }
+});
+
 function checkDrawn() {
   db.ref("drawn").once("value").then(snapshot => {
     const data = snapshot.val();

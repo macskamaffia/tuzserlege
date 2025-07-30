@@ -68,3 +68,18 @@ function showExport(drawn) {
   exportOutput.style.display = "block";
   exportOutput.value = JSON.stringify(drawn, null, 2);
 }
+
+const loginButton = document.getElementById("loginButton");
+const adminPass = document.getElementById("adminPass");
+
+const ADMIN_PASSWORD = "trimagus2025"; // ← Ezt tartsd titokban
+
+loginButton.addEventListener("click", () => {
+  if (adminPass.value === ADMIN_PASSWORD) {
+    drawButton.style.display = "inline-block";
+    loginButton.style.display = "none";
+    adminPass.style.display = "none";
+  } else {
+    alert("Hibás jelszó.");
+  }
+});

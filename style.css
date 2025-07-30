@@ -7,7 +7,6 @@ body {
   color: #f5f5dc;
   text-align: center;
   padding: 2rem;
-  backdrop-filter: brightness(0.3);
 }
 
 h1 {

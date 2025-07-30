@@ -1,0 +1,42 @@
+
+body {
+    background-color: #0f0f0f;
+    color: #f2f2f2;
+    font-family: 'Georgia', serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.serleg {
+    width: 200px;
+    margin: 20px auto;
+    display: block;
+    animation: pulse 3s infinite;
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: gold;
+    color: black;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: orange;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

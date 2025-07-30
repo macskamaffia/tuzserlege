@@ -101,6 +101,7 @@ function showResults(drawn) {
   drawn.forEach(name => {
     const li = document.createElement("li");
     li.textContent = name;
+    li.classList.add("flame");
     resultList.appendChild(li);
   });
 }

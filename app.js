@@ -52,16 +52,15 @@ function sha1(str) {
 }
 
 loginButton.addEventListener("click", () => {
-  sha1(adminPass.value.trim()).then(hash => {
-    if (hash === ADMIN_HASH) {
-      isAdmin = true;
-      drawButton.style.display = "inline-block";
-      loginButton.style.display = "none";
-      adminPass.style.display = "none";
-    } else {
-      alert("Hibás jelszó.");
-    }
-  });
+  const pw = adminPass.value.trim();
+  if (pw === "trimagus2025") {
+    isAdmin = true;
+    drawButton.style.display = "inline-block";
+    loginButton.style.display = "none";
+    adminPass.style.display = "none";
+  } else {
+    alert("Hibás jelszó.");
+  }
 });
 
 function checkDrawn() {

@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
+  <!-- Firebase SDK-k -->
+<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAb3h37qh_4rm9J9lbxRMwNMApWo_ExxXI",
+  authDomain: "tuzserlege-3e50f.firebaseapp.com",
+  databaseURL: "https://tuzserlege-3e50f-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "tuzserlege-3e50f",
+  storageBucket: "tuzserlege-3e50f.firebasestorage.app",
+  messagingSenderId: "607271028125",
+  appId: "1:607271028125:web:55dbe236ea97c6fbeadb74"
+};
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trimágus Tusa Sorsolás</title>

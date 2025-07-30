@@ -14,11 +14,14 @@
     #drawButton { display: none; margin-top: 10px; }
     ul { list-style: none; padding: 0; }
     li { margin: 5px 0; font-size: 1.2em; }
+    #countdown-box { font-size: 1.5em; margin-bottom: 20px; }
   </style>
 </head>
 <body>
   <h1>Trimágus Tusa Sorsolás</h1>
-  <div id="countdown">Várakozás...</div>
+  <div id="countdown-box">
+    <span id="countdown"></span>
+  </div>
 
   <div id="draw-container">
     <div id="login">
@@ -32,7 +35,7 @@
   </div>
 
   <script>
- const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAb3h37qh_4rm9J9lbxRMwNMApWo_ExxXI",
   authDomain: "tuzserlege-3e50f.firebaseapp.com",
   databaseURL: "https://tuzserlege-3e50f-default-rtdb.europe-west1.firebasedatabase.app",
@@ -55,21 +58,22 @@
     const drawContainer = document.getElementById("draw-container");
 
     const ADMIN_PASSWORD = "trimagus2025"; // Jelszó
-    const drawDate = new Date("2025-07-30T18:00:00"); // Halloween 18:00
+    const drawDate = new Date("2025-10-31T18:00:00"); // Halloween 18:00
 
     function updateCountdown() {
       const now = new Date();
       const diff = drawDate - now;
       if (diff <= 0) {
-        countdownEl.style.display = "none";
+        countdownEl.textContent = "Sorsolás elindult!";
         drawContainer.style.display = "block";
         checkDrawn();
         return;
       }
-      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const secs = Math.floor((diff % (1000 * 60)) / 1000);
-      countdownEl.textContent = `Sorsolás kezdete: ${hours} óra ${mins} perc ${secs} másodperc`;
+      countdownEl.textContent = `${days} nap ${hours} óra ${mins} perc ${secs} másodperc a sorsolásig.`;
     }
     setInterval(updateCountdown, 1000);
     updateCountdown();

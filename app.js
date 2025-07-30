@@ -52,7 +52,7 @@ function sha1(str) {
 }
 
 loginButton.addEventListener("click", () => {
-  sha1(adminPass.value).then(hash => {
+  sha1(adminPass.value.trim()).then(hash => {
     if (hash === ADMIN_HASH) {
       isAdmin = true;
       drawButton.style.display = "inline-block";

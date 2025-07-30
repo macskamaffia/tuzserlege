@@ -98,11 +98,13 @@ function buildWeightedList(tickets) {
 
 function showResults(drawn) {
   resultList.innerHTML = "";
-  drawn.forEach(name => {
-    const li = document.createElement("li");
-    li.textContent = name;
-    li.classList.add("flame");
-    resultList.appendChild(li);
+  drawn.forEach((name, index) => {
+    setTimeout(() => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      li.classList.add("flame", "fade-in");
+      resultList.appendChild(li);
+    }, index * 2500); // 2.5 másodpercenként új név
   });
 }
 

@@ -14,13 +14,16 @@
       <p id="countdown"></p>
     </div>
 
-    <div id="draw-container" style="display: none;">
-      <button id="drawButton">🎉 Sorsolás indítása</button>
-      <ul id="resultList"></ul>
-      <button id="exportButton" style="display: none;">💾 Exportálás JSON-ként</button>
-      <textarea id="exportOutput" readonly style="display:none;"></textarea>
-    </div>
+<div id="draw-container" style="display: none;">
+  <div id="login-section">
+    <input type="password" id="adminPass" placeholder="Staff jelszó" />
+    <button id="loginButton">🔓 Bejelentkezés</button>
   </div>
+  <button id="drawButton" style="display: none;">🎉 Sorsolás indítása</button>
+  <ul id="resultList"></ul>
+  <button id="exportButton" style="display: none;">💾 Exportálás JSON-ként</button>
+  <textarea id="exportOutput" readonly style="display:none;"></textarea>
+</div>
 
   <script src="script.js"></script>
 </body>

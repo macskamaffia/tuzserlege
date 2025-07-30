@@ -3,7 +3,7 @@ const resultList = document.getElementById("resultList");
 const exportButton = document.getElementById("exportButton");
 const exportOutput = document.getElementById("exportOutput");
 
-const drawDate = new Date("2025-10-31T18:00:00"); // Halloween 18:00
+const drawDate = new Date("2025-07-30T18:00:00"); // Halloween 18:00
 
 // Countdown logic
 const countdownEl = document.getElementById("countdown");

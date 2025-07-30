@@ -3,7 +3,7 @@ const countdownEl = document.getElementById("countdown");
 const startBtn = document.getElementById("startBtn");
 const resultList = document.getElementById("resultList");
 
-const targetDate = new Date("2025-10-31T18:00:00").getTime();
+const targetDate = new Date("2025-07-30T17:38:00").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();

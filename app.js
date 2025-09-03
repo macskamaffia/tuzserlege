@@ -1,110 +1,40 @@
-// Firebase config – saját adatokkal helyettesítsd
-
-
-const ADMIN_HASH = "f10e2821bbbea527ea02200352313bc059445190"; // hash: 'trimagus2025'
-
-const drawButton = document.getElementById("drawButton");
-const resultList = document.getElementById("resultList");
-const exportButton = document.getElementById("exportButton");
-const exportOutput = document.getElementById("exportOutput");
-const loginButton = document.getElementById("loginButton");
-const adminPass = document.getElementById("adminPass");
-const countdownEl = document.getElementById("countdown");
-const drawContainer = document.getElementById("draw-container");
-
-let isAdmin = false;
-
-const drawDate = new Date("2025-10-31T18:00:00");
-
-function updateCountdown() {
-  const now = new Date();
-  const diff = drawDate - now;
-  if (diff <= 0) {
-    countdownEl.textContent = "A Tűz Serlege lángra kapott!";
-    drawContainer.style.display = "block";
-    checkDrawn();
-    return;
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs = Math.floor((diff % (1000 * 60)) / 1000);
-  countdownEl.textContent = `${days} nap ${hours} óra ${mins} perc ${secs} másodperc hátra.`;
-}
-setInterval(updateCountdown, 1000);
-updateCountdown();
-
-function sha1(str) {
-  return crypto.subtle.digest("SHA-1", new TextEncoder().encode(str)).then(buf => {
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-  });
-}
-
-loginButton.addEventListener("click", () => {
-  const pw = adminPass.value.trim();
-  if (pw === "trimagus2025") {
-    isAdmin = true;
-    drawButton.style.display = "inline-block";
-    loginButton.style.display = "none";
-    adminPass.style.display = "none";
-  } else {
-    alert("Hibás jelszó.");
-  }
-});
-
-function checkDrawn() {
-  db.ref("drawn").once("value").then(snapshot => {
-    const data = snapshot.val();
-    if (data) {
-      showResults(data);
-      showExport(data);
-    } else if (isAdmin) {
-      drawButton.style.display = "inline-block";
-    }
-  });
-}
-
-drawButton.addEventListener("click", () => {
-  db.ref("tickets").once("value").then(snapshot => {
-    const tickets = snapshot.val();
-    const weightedList = buildWeightedList(tickets);
-    const shuffled = weightedList.sort(() => 0.5 - Math.random());
-    const unique = [...new Set(shuffled)];
-    const drawn = unique.slice(0, 6);
-    db.ref("drawn").set(drawn);
-    showResults(drawn);
-    showExport(drawn);
-  });
-});
-
-function buildWeightedList(tickets) {
-  const list = [];
-  for (const [name, weight] of Object.entries(tickets)) {
-    for (let i = 0; i < weight; i++) list.push(name);
-  }
-  return list;
-}
-
-function showResults(drawn) {
-  resultList.innerHTML = "";
-  drawn.forEach((name, index) => {
-    setTimeout(() => {
-      const li = document.createElement("li");
-      li.textContent = name;
-      li.classList.add("flame", "fade-in");
-      resultList.appendChild(li);
-    }, index * 2500); // 2.5 másodpercenként új név
-  });
-}
-
-function showExport(drawn) {
-  if (!isAdmin) return;
-  exportButton.style.display = "inline-block";
-  exportOutput.style.display = "block";
-  exportOutput.value = JSON.stringify(drawn, null, 2);
-}
-
-db.ref("drawn").on("value", snapshot => {
-  const data = snapshot.val();
-  if (data) showResults(data);
+window.addEventListener('DOMContentLoaded', function() {
+    // Always use CORS proxy for Google Sheets CSV
+    const googleCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQx2fFSOZ9Rh8NCSxyNk4xv32prfBq7i5rFjDib2EMogJBgSVbvRjfCFreW_NNAlpVq4Iw0BcNdnj7q/pub?output=csv';
+    const csvUrl = 'https://corsproxy.io/?' + encodeURIComponent(googleCsvUrl);
+    fetch(csvUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+        .then(csvText => {
+            const rows = csvText.split('\n').map(row => row.split(','));
+            // Assume first row is header, find the index of "Name" column
+            const header = rows[0];
+            const nameIdx = header.findIndex(h => h.trim().toLowerCase() === 'name');
+            if (nameIdx === -1) {
+                alert('Name column not found in CSV!');
+                return;
+            }
+            const names = rows.slice(1).map(row => row[nameIdx]).filter(Boolean);
+            // Display names in a list
+            const list = document.createElement('ul');
+            names.forEach(name => {
+                const li = document.createElement('li');
+                li.textContent = name;
+                list.appendChild(li);
+            });
+            // Add to a div with id 'namesList', or create it if missing
+            let namesDiv = document.getElementById('namesList');
+            if (!namesDiv) {
+                namesDiv = document.createElement('div');
+                namesDiv.id = 'namesList';
+                document.body.appendChild(namesDiv);
+            }
+            namesDiv.innerHTML = '';
+            namesDiv.appendChild(list);
+        })
+        .catch(err => {
+            alert('Failed to fetch CSV. Make sure the sheet is published and public. Error: ' + err);
+        });
 });

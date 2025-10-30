@@ -1,50 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
 
-/* ----- GRADIENT SZÖVEG A CÍMHEZ ÉS A SUBTITLE-HÖZ ----- */
-h1,
 .subtitle {
-  /* Finom rózsaszín -> mályva -> kék átmenet */
-  background: linear-gradient(90deg, #f85abb 0%, #a73079 50%, #549dcc 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;            /* a gradient látszódjon */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.25); /* diszkrét mélység */
+  font-family: 'Fixedsys', serif;
+  font-size: 2rem;
+  display: block;
+  margin-top: 0.5em;
+  color: linear-gradient(90deg, #f85abb 0%, #a73079 50%, #549dcc 100%);
+  text-shadow: 1px 1px 2px #000;
 }
 
-/* A h1 maradhat nagyobb, a subtitle kicsit kisebb */
-h1 { font-size: 3rem; }
-.subtitle { font-size: 2rem; }
-
-/* ----- ÁTLÁTSZÓ/GLASS DOBOZ A NÉVLISTÁNAK ----- */
-/* Használd úgy, hogy a UL-nek legyen id="namesList", vagy tedd egy div-be ezzel az ID-vel */
-#namesList {
-  /* ha UL az elem, ez működik; ha DIV a wrapper, akkor tedd a UL-re #namesList ul { ... }-t, lásd lent */
-  list-style: none;
-  margin: 6rem auto 0;
-  padding: 1.25rem 1.5rem;
-  max-width: 720px;
-
-  background: rgba(0, 0, 0, 0.35);     /* áttetsző fekete */
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-
-  color: #e9f3fb;                      /* kicsit világosabb a jobb kontraszthoz */
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+body {
+  font-family: 'Cinzel Decorative', cursive;
+  background: url('https://i.imgur.com/J4Ex761.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #f85abb;
+  text-align: center;
+  padding: 2rem;
 }
 
-/* Ha inkább így néz ki a HTML: <div id="namesList"><ul>...</ul></div>
-   akkor add hozzá ezt (mehet a fenti mellé): */
-/* 
-#namesList ul {
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px #26201b;
+}
+
+ul {
   list-style: none;
-  margin: 0;
   padding: 0;
 }
-*/
+
+li {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+}
+
+textarea {
+  width: 90%;
+  height: 150px;
+  margin-top: 8rem;
+  font-family: monospace;
+}
+
+#namesList {
+  font-size: 1.2rem;
+  margin-top: 6rem;
+  color: #549dcc;
+  text-shadow: 2px 2px #346280;
+}
 
 /* ----- NÉV ANIMÁCIÓ: LASSÚ, FINOM BEÚSZÁS LÉPCSŐZVE ----- */
 @keyframes fadeUp {
@@ -52,6 +55,7 @@ h1 { font-size: 3rem; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+}
 #namesList li {
   opacity: 0;
   animation: fadeUp 700ms ease-out forwards;
@@ -76,11 +80,3 @@ h1 { font-size: 3rem; }
 #namesList li:nth-child(13) { animation-delay: 1.90s; }
 #namesList li:nth-child(14) { animation-delay: 2.05s; }
 #namesList li:nth-child(15) { animation-delay: 2.20s; }
-
-/* Akinek érzékeny a mozgásra: tiszteletben tartjuk */
-@media (prefers-reduced-motion: reduce) {
-  #namesList li { animation: none; opacity: 1; transform: none; }
-}
-
-/* (opcionális) textarea kicsit közelebb, hogy ne tolja le nagyon a listát */
-textarea { margin-top: 3rem; }

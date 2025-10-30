@@ -72,9 +72,9 @@ textarea {
 }
 
 /* lépcsőzetes megjelenés, hogy ne egyszerre jöjjenek be */
-#namesList li:nth-child(1) { animation-delay: 5s; }
-#namesList li:nth-child(2) { animation-delay: 10s; }
-#namesList li:nth-child(3) { animation-delay: 15s; }
-#namesList li:nth-child(4) { animation-delay: 20s; }
-#namesList li:nth-child(5) { animation-delay: 25s; }
-#namesList li:nth-child(6) { animation-delay: 30s; }
+#namesList li:nth-child(1) { animation-delay: 3s; }
+#namesList li:nth-child(2) { animation-delay: 8s; }
+#namesList li:nth-child(3) { animation-delay: 13s; }
+#namesList li:nth-child(4) { animation-delay: 18s; }
+#namesList li:nth-child(5) { animation-delay: 23s; }
+#namesList li:nth-child(6) { animation-delay: 28s; }

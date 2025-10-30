@@ -21,7 +21,6 @@ body {
 h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px #26201b;
 }
 
 h1, .subtitle {
@@ -54,11 +53,11 @@ textarea {
 }
 
 #namesList {
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 12px;
   padding: 1.5rem;
   display: inline-block;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(6px);
 }
 
@@ -73,9 +72,9 @@ textarea {
 }
 
 /* lépcsőzetes megjelenés, hogy ne egyszerre jöjjenek be */
-#namesList li:nth-child(1) { animation-delay: 1s; }
-#namesList li:nth-child(2) { animation-delay: 2s; }
-#namesList li:nth-child(3) { animation-delay: 3s; }
-#namesList li:nth-child(4) { animation-delay: 4s; }
-#namesList li:nth-child(5) { animation-delay: 5s; }
-#namesList li:nth-child(6) { animation-delay: 6s; }
+#namesList li:nth-child(1) { animation-delay: 5s; }
+#namesList li:nth-child(2) { animation-delay: 10s; }
+#namesList li:nth-child(3) { animation-delay: 15s; }
+#namesList li:nth-child(4) { animation-delay: 20s; }
+#namesList li:nth-child(5) { animation-delay: 25s; }
+#namesList li:nth-child(6) { animation-delay: 30s; }

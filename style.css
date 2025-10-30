@@ -57,8 +57,8 @@ textarea {
   border-radius: 12px;
   padding: 1.5rem;
   display: inline-block;
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 }
 
 @keyframes fadeInSlow {

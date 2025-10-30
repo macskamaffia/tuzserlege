@@ -7,7 +7,6 @@
   display: block;
   margin-top: 0.5em;
   color: linear-gradient(90deg, #f85abb 0%, #a73079 50%, #549dcc 100%);
-  text-shadow: 1px 1px 2px #000;
 }
 
 body {
@@ -45,7 +44,6 @@ textarea {
   width: 90%;
   height: 150px;
   margin-top: 8rem;
-  font-family: monospace;
 }
 
 #namesList {
@@ -75,8 +73,9 @@ textarea {
 }
 
 /* lépcsőzetes megjelenés, hogy ne egyszerre jöjjenek be */
-#namesList li:nth-child(1) { animation-delay: 0.2s; }
-#namesList li:nth-child(2) { animation-delay: 0.4s; }
-#namesList li:nth-child(3) { animation-delay: 0.6s; }
-#namesList li:nth-child(4) { animation-delay: 0.8s; }
-#namesList li:nth-child(5) { animation-delay: 1.0s; }
+#namesList li:nth-child(1) { animation-delay: 1s; }
+#namesList li:nth-child(2) { animation-delay: 2s; }
+#namesList li:nth-child(3) { animation-delay: 3s; }
+#namesList li:nth-child(4) { animation-delay: 4s; }
+#namesList li:nth-child(5) { animation-delay: 5s; }
+#namesList li:nth-child(6) { animation-delay: 6s; }

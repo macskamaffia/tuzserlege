@@ -6,7 +6,7 @@
   font-size: 2rem;
   display: block;
   margin-top: 0.5em;
-  color: #d0c9f2;
+  color: #a73079;
   text-shadow: 1px 1px 2px #000;
 }
 
@@ -45,5 +45,5 @@ textarea {
 #namesList {
   font-size: 1.2rem;
   margin-top: 6rem;
-  color: #9f276e;
+  color: #d0c9f2;
 }

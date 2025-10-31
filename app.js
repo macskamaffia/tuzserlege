@@ -38,3 +38,28 @@ window.addEventListener('DOMContentLoaded', function() {
             alert('Failed to fetch CSV. Make sure the sheet is published and public. Error: ' + err);
         });
 });
+
+<script>
+  function updateCountdown() {
+    const endTime = new Date("2025-10-31T17:00:00+01:00").getTime();
+    const now = new Date().getTime();
+    const timeLeft = endTime - now;
+
+    const container = document.getElementById("countdown-timer");
+
+    if (timeLeft <= 0) {
+      container.innerHTML = "A bajnokokat már kihirdették!";
+      return;
+    }
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+    const seconds = Math.floor((timeLeft / 1000) % 60);
+
+    container.innerHTML = days + " nap " + hours + " óra " + minutes + " perc " + seconds + " mp";
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>

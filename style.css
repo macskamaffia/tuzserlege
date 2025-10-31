@@ -6,7 +6,14 @@
   font-size: 2rem;
   display: block;
   margin-top: 0.5em;
-  color: linear-gradient(90deg, #f85abb 0%, #a73079 50%, #549dcc 100%);
+  color: linear-gradient(
+  90deg,
+  #549dcc 0%,   /* világos, izzó pink */
+  #e5549f 20%,  /* élénk pink láng */
+  #b2125d 45%,  /* sötét pink mag */
+  #c84d8d 65%,  /* átmenet a hűvösebb tónusba */
+  #549dcc 100%  /* kékes vég – hideg perem, mint a tűz lángja */
+);
 }
 
 body {

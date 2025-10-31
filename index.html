@@ -9,7 +9,51 @@
 <body>
   <h1>A Tűz Serlege<br>
   <span class="subtitle">RoxfortRPG 2025
-    <div id="countdown-timer"></div></span></h1>
+    </span>
+      <span id="countdown-timer" style="
+      margin-top: 3px;
+      font-size: small;
+      font-weight: bold;
+background: linear-gradient(
+  90deg,
+  #549dcc 0%,   /* világos, izzó pink */
+  #e5549f 20%,  /* élénk pink láng */
+  #b2125d 45%,  /* sötét pink mag */
+  #c84d8d 65%,  /* átmenet a hűvösebb tónusba */
+  #549dcc 100%  /* kékes vég – hideg perem, mint a tűz lángja */
+);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    "></span>
+  </td>
+</tr>
+
+<script>
+  function updateCountdown() {
+    const endTime = new Date("2025-10-31T17:00:00+01:00").getTime();
+    const now = new Date().getTime();
+    const timeLeft = endTime - now;
+
+    const container = document.getElementById("countdown-timer");
+
+    if (timeLeft <= 0) {
+      container.innerHTML = "A bajnokokat már kihirdették!";
+      return;
+    }
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((timeLeft / (1000 * 60)) % 60);
+    const seconds = Math.floor((timeLeft / 1000) % 60);
+
+    container.innerHTML = days + " nap " + hours + " óra " + minutes + " perc " + seconds + " mp";
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+</h1>
   <div id="namesList"><br>Lankadatlan éberség...</div>
   <script src="app.js"></script>
 </body>

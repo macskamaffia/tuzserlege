@@ -31,7 +31,14 @@ h1 {
 }
 
 h1, .subtitle {
-  background: linear-gradient(90deg, #f85abb, #a73079, #549dcc);
+  background: linear-gradient(
+  90deg,
+  #549dcc 0%,   /* világos, izzó pink */
+  #e5549f 20%,  /* élénk pink láng */
+  #b2125d 45%,  /* sötét pink mag */
+  #c84d8d 65%,  /* átmenet a hűvösebb tónusba */
+  #549dcc 100%  /* kékes vég – hideg perem, mint a tűz lángja */
+);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
